@@ -1,0 +1,78 @@
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ✅ Animate HORIZONTAL lines
+    gsap.registerPlugin(ScrollTrigger); // Ensure ScrollTrigger is registered
+
+    let horizontalLines = document.querySelectorAll('[data-animate="h-line"]');
+
+    horizontalLines.forEach(line => {
+        gsap.fromTo(line, 
+            { scaleX: '0%', transformOrigin: 'left' }, 
+            { 
+                scaleX: '100%', 
+                duration: 1, 
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: line,
+                    start: "top 90%", // When 80% of the element is in view
+                    end: "bottom bottom", // Animation range
+                    toggleActions: "none play none reset" // Play when in view, reset when out
+                }
+            }
+        );
+    });
+
+    // ✅ Staggered Appear Animation for Child Elements with `data-animate="appear-children"`
+    gsap.utils.toArray("[data-animate='appear-children']").forEach(parent => {
+        gsap.set(
+            parent.children, 
+            { 
+                y: 48, 
+                opacity: 0 
+            }
+        ),
+        gsap.to(
+            parent.children,
+            { 
+                y: 0,
+                opacity: 1,
+                duration: 0.64,
+                stagger: 0.16,
+                scrollTrigger: {
+                    trigger: parent,
+                    start: "top 80%",
+                }
+            }
+        );
+    });
+
+    // ✅ Animate by letters
+    // Select all elements with data-animate="letters-fade-in"
+    let quoteElements = document.querySelectorAll('[data-animate="letters-fade-in"]');
+
+    quoteElements.forEach((element) => {
+        // Split text into words and characters
+        let splitText = new SplitType(element, { types: "words, chars", wordClass: "split-word", charClass: "split-char" });
+
+        // Set initial opacity and position for each character
+        gsap.set(splitText.chars, { opacity: 0, y: 50 });
+
+        // GSAP animation
+        gsap.to(
+            splitText.chars, // Target only characters
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1.2, 
+                ease: "power3.out", 
+                stagger: { amount: 0.5 }, // Smooth staggered effect
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%", // Animation starts when 85% of the element is in view
+                    toggleActions: "play none none reset" // Play when entering, reset when leaving
+                }
+            }
+        );
+    });
+
+});
