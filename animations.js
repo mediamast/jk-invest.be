@@ -1,6 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ✅ Animate HORIZONTAL lines
+    // ✅ Page transitions
+    gsap.to(".load-overlay",
+        {
+            y: "-100%",
+            duration: 1,
+            ease: "power3.out",
+            onComplete: () => {
+                gsap.set(".load-overlay", {display: "none"});
+            }
+        }
+    );
+
+    $("a").on("click", function(e){
+        e.preventDefault();
+        let destination = $(this).attr("href");
+        gsap.set(".load-overlay", {display: "block"});
+        gsap.fromTo(
+            ".load-overlay", {
+                y: "100%"
+            },
+            {
+                y: "0%",
+                duration: 0.25,
+                ease: "power1.out",
+                onComplete: () => {
+                    window.location = destination
+                }
+            }
+        );
+    });
+
+    // ✅ Horizontal lines
     gsap.registerPlugin(ScrollTrigger); // Ensure ScrollTrigger is registered
 
     let horizontalLines = document.querySelectorAll('[data-animate="h-line"]');

@@ -51,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Animate desktop nav items from top on page load
         gsap.fromTo(
             menuItems,
-            { opacity: 0, y: -24 },
-            { opacity: 1, y: 0, delay: 0.2, duration: 0.5, stagger: 0.05, ease: "power2.out" }
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, delay: .5, duration: 0.5, stagger: 0.05, ease: "power2.out" }
         );
 
         gsap.fromTo(
             menuLogo,
-            { opacity: 0, y: -24 },
+            { opacity: 0, y: 0 },
             { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }
         );
     });
