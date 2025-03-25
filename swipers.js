@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loop: true,
         direction: 'horizontal',
         speed: 500,
-        slidesPerView: 1.5, // Mobile Portrait
+        slidesPerView: 1, // Mobile Portrait
         spaceBetween: 16,
 
         breakpoints: {
