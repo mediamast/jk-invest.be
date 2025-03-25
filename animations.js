@@ -12,20 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-    $("a").on("click", function(e){
+    $('a:not([data-animate="no-page-transition"]):not(.no-page-transition)').on("click", function(e){
         e.preventDefault();
         let destination = $(this).attr("href");
         gsap.set(".load-overlay", {display: "block"});
         gsap.fromTo(
-            ".load-overlay", {
-                y: "100%"
-            },
+            ".load-overlay",
+            { y: "100%" },
             {
                 y: "0%",
                 duration: 0.25,
                 ease: "power1.out",
                 onComplete: () => {
-                    window.location = destination
+                    window.location = destination;
                 }
             }
         );
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.set(
             parent.children, 
             { 
-                y: 48, 
+                y: "32%", 
                 opacity: 0 
             }
         ),
@@ -67,8 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
             { 
                 y: 0,
                 opacity: 1,
+                delay: 0.25,
                 duration: 0.64,
-                stagger: 0.16,
+                stagger: 0.1,
+                ease: "power1.out", 
                 scrollTrigger: {
                     trigger: parent,
                     start: "top 80%",
@@ -86,20 +87,21 @@ document.addEventListener("DOMContentLoaded", () => {
         let splitText = new SplitType(element, { types: "words, chars", wordClass: "split-word", charClass: "split-char" });
 
         // Set initial opacity and position for each character
-        gsap.set(splitText.chars, { opacity: 0, y: 50 });
+        gsap.set(splitText.chars, { opacity: 0, y: "40%" });
 
         // GSAP animation
         gsap.to(
             splitText.chars, // Target only characters
             { 
                 opacity: 1, 
+                delay: 0.1,
                 y: 0, 
-                duration: 1.2, 
+                duration: 0.9, 
                 ease: "power3.out", 
-                stagger: { amount: 0.5 }, // Smooth staggered effect
+                stagger: { amount: 0.3 }, // Smooth staggered effect
                 scrollTrigger: {
                     trigger: element,
-                    start: "top 85%", // Animation starts when 85% of the element is in view
+                    start: "top 80%", // Animation starts when 80% of the element is in view
                     toggleActions: "play none none reset" // Play when entering, reset when leaving
                 }
             }

@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         document.querySelectorAll('[data-animate="lines-slide-in"]').forEach((element) => {
           animateTextLines(element);
         });
-    }, 500);
+    }, 250);
 
     function animateTextLines(textElement) {
         gsap.set(textElement, { autoAlpha: 1 });
@@ -30,8 +30,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
             { yPercent: 100 },
             {
               yPercent: 0,
-              duration: 0.6,
-              stagger: { amount: 0.3, ease: "power1.out" },
+              duration: .65,
+              stagger: { amount: 0.2, ease: "power3.out" },
             }
           );
         }
