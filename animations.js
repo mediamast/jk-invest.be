@@ -78,6 +78,32 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
+    // ✅ Staggered Appear Animation for Child Elements with `data-animate="appear-children"`
+    gsap.utils.toArray("[data-animate='appear-children-fr']").forEach(parent => {
+        gsap.set(
+            parent.children, 
+            { 
+                x: 32, 
+                opacity: 0 
+            }
+        ),
+        gsap.to(
+            parent.children,
+            { 
+                x: 0,
+                opacity: 1,
+                delay: 0.25,
+                duration: 0.64,
+                stagger: 0.1,
+                ease: "power1.out", 
+                scrollTrigger: {
+                    trigger: parent,
+                    start: "top 80%",
+                }
+            }
+        );
+    });
+
     // ✅ Animate by letters
     // Select all elements with data-animate="letters-fade-in"
     let quoteElements = document.querySelectorAll('[data-animate="letters-fade-in"]');
