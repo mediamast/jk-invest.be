@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Menu
+    // ==================================================== 
+    // Mobile navigation: Init
+    // ====================================================
     let menuWrapper = document.querySelector('[data-animate="stagger-nav"]'); // Target element
     let menuItems = menuWrapper ? menuWrapper.children : []; // Direct children of the target element
     let menuButton = document.querySelector(".w-nav-button"); // Webflow menu button
@@ -10,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return window.innerWidth < 992;
     }
 
-    // --- Mobile: open/close animations when menu toggles ---
+    // ==================================================== 
+    // Mobile navigation: Open/close transition
+    // ====================================================
     function openMenu() {
         if (!menuWrapper || !isMobile()) return;
 
@@ -33,7 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Toggle mobile menu animation on click
+    // ==================================================== 
+    // Mobile navigation: Toggle mobile menu animation on click
+    // ====================================================
     menuButton.addEventListener("click", function () {
         if (!isMobile()) return;
 
@@ -44,7 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Desktop: Animate nav items on page load ---
+    // ==================================================== 
+    // Desktop navigation: Animate elements IN
+    // ====================================================
     window.addEventListener("DOMContentLoaded", () => {
         if (!menuWrapper || isMobile()) return;
 
@@ -62,7 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 
+    // ==================================================== 
     // Show/hide navigation on scroll
+    // ====================================================
     const mainNav = document.querySelector('.nav');
     let lastScrollY = 0;
     const scrollUpThreshold = 16; // Threshold for scrolling up
