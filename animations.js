@@ -10,33 +10,60 @@ document.addEventListener("DOMContentLoaded", () => {
     // Page Transition Handler
     // ====================================================
 
-    gsap.to(".load-overlay", {
-        y: "-100%",
-        duration: .75,
-        ease: "power3.out",
-        onComplete: () => {
-            gsap.set(".load-overlay", {display: "none"});
-        }
-    });
-
-    $('a:not([data-animate="no-page-transition"]):not(.no-page-transition)').on(
-        "click",
-        function (e) {
-            e.preventDefault();
-            let destination = $(this).attr("href");
-            gsap.set(".load-overlay", {display: "block"});
-            gsap.fromTo(".load-overlay", {
-                y: "100%"
-            }, {
-                y: "0%",
-                duration: 0.25,
-                ease: "power1.out",
+    // On normal page load (not from back-forward cache), animate overlay out
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+            // If page was restored from cache (like after clicking 'Back'), just hide the overlay immediately
+            gsap.set(".load-overlay", {
+                y: "-100%",
+                display: "none"
+            });
+        } else {
+            // If it's a normal load, animate the overlay out smoothly
+            gsap.to(".load-overlay", {
+                y: "-100%",
+                duration: 0.75,
+                ease: "power3.out",
                 onComplete: () => {
-                    window.location = destination;
+                    gsap.set(".load-overlay", { display: "none" });
                 }
             });
         }
-    );
+    });
+
+    $('a:not([data-animate="no-page-transition"]):not(.no-page-transition)').on("click", function (e) {
+        const href = $(this).attr("href");
+    
+        // Skip if:
+        // - no href
+        // - anchor link
+        // - javascript link
+        // - mailto link
+        // - external link
+        if (
+            !href ||
+            href.startsWith("#") ||
+            href.startsWith("javascript:") ||
+            href.startsWith("mailto:") ||
+            new URL(href, window.location.href).origin !== window.location.origin
+        ) {
+            return; // Allow default behavior
+        }
+    
+        e.preventDefault();
+    
+        gsap.set(".load-overlay", { display: "block" });
+        gsap.fromTo(".load-overlay", {
+            y: "100%"
+        }, {
+            y: "0%",
+            duration: 0.25,
+            ease: "power1.out",
+            onComplete: () => {
+                window.location = href;
+            }
+        });
+    });
 
     // ==================================================== 
     // Animations of the horizontal lines 
